@@ -59,19 +59,37 @@ public class CourseList implements Cloneable {
 		if (otherList.head == null)
 			head = null;
 		else {
-			CourseNode temp = otherList.head; // Temporary pointer to the list to be copied
-			CourseNode newHead = new CourseNode(temp.course.clone(), null); // what will return to head eventually
-			CourseNode end = newHead; // always points to end, so update all the time
-			temp = temp.next; // point to the second element in the original array
+			CourseNode temp = otherList.head; // Temporary pointer to the list
+												// to be copied
+			CourseNode newHead = new CourseNode(temp.course.clone(), null); // what
+																			// will
+																			// return
+																			// to
+																			// head
+																			// eventually
+			CourseNode end = newHead; // always points to end, so update all the
+										// time
+			temp = temp.next; // point to the second element in the original
+								// array
 			while (temp != null) {
-				end.next = new CourseNode(temp.course.clone(), null); // if the next element exists, make a new one and
+				end.next = new CourseNode(temp.course.clone(), null); // if the
+																		// next
+																		// element
+																		// exists,
+																		// make
+																		// a new
+																		// one
+																		// and
 																		// have
-																		// end point to it
+																		// end
+																		// point
+																		// to it
 				end = end.next; // end points to the latest element
 				temp = temp.next; // advance the temp scan on original array
 				// rinse lather repeat!
 			}
-			head = newHead; // head now points to the head of the new list, deep copied!
+			head = newHead; // head now points to the head of the new list, deep
+							// copied!
 			size = otherList.size;
 		}
 	}
@@ -85,8 +103,10 @@ public class CourseList implements Cloneable {
 	}
 
 	public boolean insertAtIndex(Course c, int index) throws NoSuchElementException {
-		if (c == null || !contains(c.getCourseID()))
+		if (c == null) {
+			System.out.println("Was null");
 			return false;
+		}
 		if (index < 0 || index > (size - 1))
 			throw new NoSuchElementException();
 		if (index == 0)
@@ -102,9 +122,7 @@ public class CourseList implements Cloneable {
 		return true;
 	}
 
-	public boolean deleteAtIndex(Course c, int index) throws NoSuchElementException {
-		if (c == null || !contains(c.getCourseID()))
-			return false;
+	public boolean deleteAtIndex(int index) throws NoSuchElementException {
 		if (index < 0 || index > (size - 1))
 			throw new NoSuchElementException();
 		if (index == 0) {
@@ -114,7 +132,8 @@ public class CourseList implements Cloneable {
 			for (int i = 0; i < (index - 1); i++) {
 				indexedNode = indexedNode.next;
 			}
-			indexedNode.next = indexedNode.next.next; // deleted element in the middle
+			indexedNode.next = indexedNode.next.next; // deleted element in the
+														// middle
 		}
 		size--;
 		return true;
@@ -152,6 +171,20 @@ public class CourseList implements Cloneable {
 
 	public boolean equals(Syllabus s) {
 		return false;
+	}
+
+	public void display() {
+		System.out.print("This course list has");
+		if (size == 0) {
+			System.out.println(" no contents");
+		} else {
+			System.out.print(" " + (int) size + " courses. They are : \n");
+			CourseNode iterator = head;
+			for (int i = 0; i < size; i++) {
+				System.out.println("\n " + (i + 1) + ":\n" + iterator.course.toString());
+				iterator = iterator.next;
+			}
+		}
 	}
 
 }
