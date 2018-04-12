@@ -40,7 +40,7 @@ public class CourseList implements Cloneable {
 	}
 
 	private CourseNode head;
-	private double size;
+	private int size;
 
 	/*
 	 * Default Constructor
@@ -92,6 +92,10 @@ public class CourseList implements Cloneable {
 							// copied!
 			size = otherList.size;
 		}
+	}
+
+	public int getSize() {
+		return size;
 	}
 
 	public boolean addToStart(Course c) {
