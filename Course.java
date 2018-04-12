@@ -11,6 +11,10 @@ public class Course implements DirectlyRelatable, Cloneable {
 		this.credit = credit;
 		this.preReqID = preReqID;
 		this.coReqID = coReqID;
+		if (preReqID == null)
+			this.preReqID = "";
+		if (coReqID == null)
+			this.coReqID = "";
 	}
 
 	private String courseID;
