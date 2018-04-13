@@ -5,9 +5,9 @@ public class CourseList implements Cloneable {
 	/*
 	 * Inner class, made private
 	 */
-	private class CourseNode {
-		private Course course;
-		private CourseNode next;
+	public class CourseNode {
+		public Course course;
+		public CourseNode next;
 
 		/*
 		 * Default constructor
@@ -35,6 +35,9 @@ public class CourseList implements Cloneable {
 
 		public CourseNode clone() {
 			return new CourseNode(this);
+		}
+		public Course getCourse() {
+			return course;
 		}
 
 	}
@@ -190,6 +193,7 @@ public class CourseList implements Cloneable {
 			}
 		}
 	}
+	
 
 }
 
