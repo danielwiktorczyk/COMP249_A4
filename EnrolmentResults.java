@@ -1,3 +1,9 @@
+
+// -----------------------------------------------------
+// Assignment 4
+// Written by: Waqar Qureshi - 40055526 and Daniel Wiktorczyk - 40060894
+// -----------------------------------------------------
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -118,17 +124,21 @@ public class EnrolmentResults {
 		// two empty course lists
 		System.out.println("PART A : ");
 		System.out.println("================================================");
+		System.out.println("Creating two course lists and displaying contents : ");
 		CourseList cl1 = new CourseList();
 		CourseList cl2 = new CourseList();
 		cl1.display();
 		cl2.display();
 		System.out.println("================================================");
+
 		pause(userIn);
 
 		// part b
 		// syllabus file
 		System.out.println("PART B : ");
 		System.out.println("================================================");
+		System.out.println("Opening the Syllabus.txt file, and reading its contents line by line");
+		System.out.println("   Note that Syllabus has a CourseList attribute and initializes that particular list");
 		Syllabus List = new Syllabus("Syllabus.txt");
 		System.out.println("================================================");
 		pause(userIn);
