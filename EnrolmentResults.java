@@ -17,7 +17,7 @@ public class EnrolmentResults {
 		userIn.nextLine();
 	}
 
-	public static void Request(Syllabus List, Scanner userIn) {
+	private static void request(Syllabus List, Scanner userIn) {
 		System.out.println("Please enter the name of the request file you'd like to submit");
 		Scanner sc = new Scanner(System.in);
 		String thisLine;
@@ -32,7 +32,7 @@ public class EnrolmentResults {
 				sb.append("\n");
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Check your files, you've left something missing");
+			System.out.println("Did not find requested Request file. Remember *.txt !");
 			System.exit(0);
 		} finally {
 			sc.close();
@@ -57,32 +57,32 @@ public class EnrolmentResults {
 		else {
 			for (int i = 0; i < Requested.size(); i++) {
 				CourseList tempList = List.getList();
-				Course tempCourse = tempList.find(Requested.get(i)).course;
+				Course tempCourse = tempList.find(Requested.get(i)).getCourse();
 				System.out.println(tempCourse);
 				boolean coreqs = false;
 				boolean prereqs = false;
-				if (Finished.contains(tempCourse.getpreReqID()) || tempCourse.getpreReqID() == "") {
+				if (Finished.contains(tempCourse.getPreReqID()) || tempCourse.getPreReqID() == "") {
 					prereqs = true;
 				}
-				if (Finished.contains(tempCourse.getcoReqID()) || Requested.contains(tempCourse.getcoReqID())
-						|| tempCourse.getcoReqID() == "") {
+				if (Finished.contains(tempCourse.getCoReqID()) || Requested.contains(tempCourse.getCoReqID())
+						|| tempCourse.getCoReqID() == "") {
 					coreqs = true;
 				}
 				if (coreqs == true && prereqs == true) {
-					if (tempCourse.getcoReqID() == "" && tempCourse.getpreReqID() == "")
+					if (tempCourse.getCoReqID() == "" && tempCourse.getPreReqID() == "")
 						System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID());
-					else if (tempCourse.getcoReqID() == "" && tempCourse.getpreReqID() != "") {
+					else if (tempCourse.getCoReqID() == "" && tempCourse.getPreReqID() != "") {
 						System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID()
-								+ " due to enrollment in coreq: " + tempCourse.getcoReqID());
+								+ " due to enrollment in coreq: " + tempCourse.getCoReqID());
 					}
-					if (tempCourse.getcoReqID() != "" && tempCourse.getpreReqID() == "") {
+					if (tempCourse.getCoReqID() != "" && tempCourse.getPreReqID() == "") {
 						System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID()
-								+ " due to previous completion of prequisite: " + tempCourse.getpreReqID());
+								+ " due to previous completion of prequisite: " + tempCourse.getPreReqID());
 					}
-					if (tempCourse.getcoReqID() != "" && tempCourse.getpreReqID() != "") {
+					if (tempCourse.getCoReqID() != "" && tempCourse.getPreReqID() != "") {
 						System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID()
-								+ " due to previous completion of prequisite: " + tempCourse.getpreReqID()
-								+ " and current enrollment in the coreq " + tempCourse.getcoReqID());
+								+ " due to previous completion of prequisite: " + tempCourse.getPreReqID()
+								+ " and current enrollment in the coreq " + tempCourse.getCoReqID());
 					}
 				} else
 					System.out.println("Student can't enroll in " + tempCourse.getCourseID()
@@ -97,10 +97,14 @@ public class EnrolmentResults {
 		System.out.println("PART D : ");
 		System.out.println("================================================");
 		boolean flag = true;
+		int iterations = 0;
 		while (flag) {
+			
+			// TODO need to do find 
 			System.out.println(
 					"Please enter the ID (not the name) of the course you'd like to search the request file for"
-							+ "\n   (Enter \"stop\" to terminate this section of searching)");
+							+ "\n   (Enter \"stop\" to terminate this section of searching)"
+							+ "\n   ~You have searched for courses a running total of " +iterations+ " times.");
 
 			String search = userIn.nextLine();
 			if (search.equalsIgnoreCase("stop"))
@@ -112,7 +116,7 @@ public class EnrolmentResults {
 					System.out.println("The request file doesn't contains the course you're looking for");
 				System.out.println("================================================");
 			}
-
+			iterations++;
 		}
 	}
 
@@ -125,10 +129,10 @@ public class EnrolmentResults {
 		System.out.println("PART A : ");
 		System.out.println("================================================");
 		System.out.println("Creating two course lists and displaying contents : ");
-		CourseList cl1 = new CourseList();
-		CourseList cl2 = new CourseList();
-		cl1.display();
-		cl2.display();
+		CourseList ecL = new CourseList();
+		CourseList ecLPRIME = new CourseList();
+		ecL.display();
+		ecLPRIME.display();
 		System.out.println("================================================");
 
 		pause(userIn);
@@ -148,7 +152,7 @@ public class EnrolmentResults {
 		System.out.println("PART C : ");
 		System.out.println("================================================");
 
-		Request(List, userIn);
+		request(List, userIn);
 
 		// part e
 		// test constructors/methods of classes
@@ -161,7 +165,7 @@ public class EnrolmentResults {
 		Course ec3 = new Course("ARTS412", "Art of origami", 4, "ARTS244", "ARTS446");
 		Course ec4 = new Course("ARTS512", "Advanced art", 6, "ARTS446", "");
 		Course ec5 = new Course("ARTS532", "Advanced art", 6, "ARTS446", "");
-		CourseList ecL = new CourseList();
+
 		ecL.addToStart(ec1);
 		ecL.addToStart(ec2);
 		ecL.addToStart(ec3);
@@ -170,7 +174,7 @@ public class EnrolmentResults {
 		pause(userIn);
 
 		System.out.println("Copying this courselist into ecLPRIME");
-		CourseList ecLPRIME = new CourseList(ecL);
+		ecLPRIME = new CourseList(ecL);
 		ecLPRIME.display();
 		System.out.println("Contents of ecLPRIME (compare this to the previous)");
 
@@ -193,7 +197,7 @@ public class EnrolmentResults {
 		pause(userIn);
 
 		System.out.println("Deleting element at index 3");
-		ecL.deleteAtIndex(3);
+		ecL.deleteFromIndex(3);
 		ecL.display();
 
 		pause(userIn);
