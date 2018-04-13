@@ -1,13 +1,100 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-
+import java.util.StringTokenizer;
+import java.util.ArrayList;
 public class EnrolmentResults {
 
-	private static void pause(Scanner userIn) {
+private static void pause(Scanner userIn) {
 		System.out.println("\nAdvance code? Hit enter");
 		userIn.nextLine();
 	}
+public static void Request(Syllabus List,Scanner userIn) {
+		System.out.println("Please enter the name of the request file you'd like to submit");
+		Scanner sc = new Scanner(System.in);
+		String thisLine;
+		StringBuilder sb=null;
+		String answer = sc.nextLine();
+		try {
+			sc = new Scanner(new FileInputStream(answer));
+			sb = new StringBuilder();
+			while (sc.hasNextLine()) {
+				thisLine = sc.nextLine();
+				sb.append(thisLine);
+				sb.append("\n");
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Check your files, you've left something missing");
+			System.exit(0);
+		} finally {
+			sc.close();
+		}
+		String Request = sb.toString();
+		StringTokenizer st = new StringTokenizer(Request, "\n");
+		ArrayList<String> Finished = new ArrayList<String>();
+		ArrayList<String> Requested = new ArrayList<String>();
+		boolean flip = false;
+		while (st.hasMoreTokens()) {
+			String temp = st.nextToken();
+			if (temp.equals("Requested")) {
+				flip = true;
+			}
+			if (flip == false && temp.equals("Finished") ==false) {
+				Finished.add(temp);
+			}
+			else 
+				if (temp.equals("Requested")==false && temp.equals("Finished") ==false)
+				Requested.add(temp);
+		}		
+		for (int i=0; i<Requested.size();i++) {
+			CourseList tempList = List.getList();
+			 Course tempCourse =tempList.find(Requested.get(i)).course;
+			 System.out.println(tempCourse);
+			boolean coreqs = false;
+			boolean prereqs = false;
+			if (Finished.contains(tempCourse.getpreReqID()) || tempCourse.getpreReqID() == ""){
+				prereqs = true;
+			}
+			if (Finished.contains(tempCourse.getcoReqID()) || Requested.contains(tempCourse.getcoReqID()) || tempCourse.getcoReqID()== "") {
+				coreqs = true;
+			}
+			if (coreqs == true && prereqs == true) {
+				if (tempCourse.getcoReqID() == "" && tempCourse.getpreReqID() == "")
+					System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID()); 
+					else 
+				if (tempCourse.getcoReqID() == "" && tempCourse.getpreReqID() != "") {
+						System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID() + " due to enrollment in coreq: " + tempCourse.getcoReqID());
+					}
+				if (tempCourse.getcoReqID() != "" && tempCourse.getpreReqID() == "") {
+					System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID() + " due to previous completion of prequisite: " + tempCourse.getpreReqID());
+				}
+				if (tempCourse.getcoReqID() != "" && tempCourse.getpreReqID() != "") {
+					System.out.println("Sucessful Enrollment into " + tempCourse.getCourseID() + " due to previous completion of prequisite: " + tempCourse.getpreReqID() +" and current enrollment in the coreq " + tempCourse.getcoReqID());
+				}
+			}
+			else
+				System.out.println("Student can't enroll in " + tempCourse.getCourseID() +  " as he/she doesn't have sufficient background needed");
+			
+		}
+		// part d
+		// prompt user for courseIDs, search list, display iterations
+		System.out.println("================================================");
+			pause(userIn);
+		System.out.println("PART D : ");
+		System.out.println("================================================");
+		System.out.println("Please enter the name of the course you'd like to search the request file for");
+			String Search = userIn.nextLine();
+			if(Finished.contains(Search)||Requested.contains(Search)) {
+				System.out.println("The request file contains the course you're looking for");
+			}
+			else
+			System.out.println("The request file doesn't contains the course you're looking for");
+		System.out.println("================================================");
+		pause(userIn);
+}
 
-	public static void main(String[] args) {
+
+public static void main(String[] args) {
 
 		Scanner userIn = new Scanner(System.in);
 
@@ -26,7 +113,7 @@ public class EnrolmentResults {
 		// syllabus file
 		System.out.println("PART B : ");
 		System.out.println("================================================");
-		Syllabus s = new Syllabus("Syllabus.txt");
+		Syllabus List = new Syllabus("Syllabus.txt");
 		System.out.println("================================================");
 		pause(userIn);
 
@@ -34,17 +121,17 @@ public class EnrolmentResults {
 		// open a request file
 		System.out.println("PART C : ");
 		System.out.println("================================================");
-
-		System.out.println("================================================");
-		pause(userIn);
+					Request(List,userIn);
+	//	System.out.println("================================================");
+		//pause(userIn);
 
 		// part d
 		// prompt user for courseIDs, search list, display iterations
-		System.out.println("PART D : ");
-		System.out.println("================================================");
+		//System.out.println("PART D : ");
+		//System.out.println("================================================");
 
-		System.out.println("================================================");
-		pause(userIn);
+		//System.out.println("================================================");
+		//pause(userIn);
 
 		// part e
 		// test constructors/methods of classes
@@ -151,3 +238,4 @@ public class EnrolmentResults {
  * as open to you. You can do whatever you wish as long as COMP249 - Winter 2018
  * Assignment 4 - Page 5 of 6 your methods are being tested including
  */
+
