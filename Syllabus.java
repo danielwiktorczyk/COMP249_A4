@@ -1,14 +1,13 @@
-import java.io.File;
-import java.io.PrintWriter;
+
+// -----------------------------------------------------
+// Assignment 4
+// Written by: Waqar Qureshi - 40055526 and Daniel Wiktorczyk - 40060894
+// -----------------------------------------------------
+
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.util.StringTokenizer;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileReader;
 
 /*
  * Created from the syllabus file by interpreting it and saving the contained courses into an array
@@ -25,14 +24,14 @@ public class Syllabus {
 		// System.out.println(s);
 		courses = breakFile(s);
 		coursesList = new CourseList();
-		for (int i=courses.length-1; i>=0; i--) {
-			if (coursesList.contains(courses[i].getCourseID())==false)
-			coursesList.addToStart(courses[i]);
+		for (int i = courses.length - 1; i >= 0; i--) {
+			if (coursesList.contains(courses[i].getCourseID()) == false)
+				coursesList.addToStart(courses[i]);
 		}
 		coursesList.display();
 	}
 
-public String readFile(String fileName) {
+	public String readFile(String fileName) {
 
 		Scanner sc = null;
 		StringBuilder sb = null;
@@ -54,8 +53,7 @@ public String readFile(String fileName) {
 		return sb.toString();
 	}
 
-
-public Course[] breakFile(String File) {
+	public Course[] breakFile(String File) {
 		StringTokenizer st = new StringTokenizer(File, "\n");
 		String[] lines = new String[st.countTokens()];
 		int i = 0;
@@ -72,92 +70,51 @@ public Course[] breakFile(String File) {
 		for (int j = 0; j < lines.length; j++) {
 			StringTokenizer sb = new StringTokenizer(lines[j], "\t");
 			int k = 0;
-			
-		if (j % 3 == 0) {
-					while (sb.hasMoreTokens()) {
-						LineOne[j][k] = sb.nextToken();
-						//System.out.println(LineOne[j][k]);
-						// System.out.println("------");
-						k++;
-					}
+
+			if (j % 3 == 0) {
+				while (sb.hasMoreTokens()) {
+					LineOne[j][k] = sb.nextToken();
+					// System.out.println(LineOne[j][k]);
+					// System.out.println("------");
+					k++;
+				}
 			}
-			
-		if (j % 3 == 1) {
-					while (sb.hasMoreTokens()) {
-						LineTwo[j][k] = sb.nextToken();
-						//System.out.println(LineTwo[j][k]);
-						// System.out.println("------");
-						k++;
-					}
+
+			if (j % 3 == 1) {
+				while (sb.hasMoreTokens()) {
+					LineTwo[j][k] = sb.nextToken();
+					// System.out.println(LineTwo[j][k]);
+					// System.out.println("------");
+					k++;
+				}
 			}
-			
-		if (j % 3 == 2) {
-					while (sb.hasMoreTokens()) {
-						LineThree[j][k] = sb.nextToken();
-						//System.out.println(LineThree[j][k]);
-						// System.out.println("------");
-						k++;
-					}
+
+			if (j % 3 == 2) {
+				while (sb.hasMoreTokens()) {
+					LineThree[j][k] = sb.nextToken();
+					// System.out.println(LineThree[j][k]);
+					// System.out.println("------");
+					k++;
+				}
 			}
-}
-		Course[] courses = new Course[lines.length/3];
-		double[] credits = new double[(lines.length/3)];
+		}
+		Course[] courses = new Course[lines.length / 3];
+		double[] credits = new double[(lines.length / 3)];
 		int count = 0;
-		for(int p=0;p<lines.length;p+=3){
-			credits[count]=Double.parseDouble(LineOne[p][2]);
+		for (int p = 0; p < lines.length; p += 3) {
+			credits[count] = Double.parseDouble(LineOne[p][2]);
 			count++;
 		}
-			count=0;
-		for (int p=0;p<lines.length; p+=3){
-			courses[count] = new Course(LineOne[p][0],LineOne[p][1],credits[count],LineTwo[p+1][1],LineThree[p+2][1]);
+		count = 0;
+		for (int p = 0; p < lines.length; p += 3) {
+			courses[count] = new Course(LineOne[p][0], LineOne[p][1], credits[count], LineTwo[p + 1][1],
+					LineThree[p + 2][1]);
 			count++;
 		}
-return courses;
+		return courses;
 	}
-public CourseList getList() {
-	return this.coursesList;
+
+	public CourseList getList() {
+		return this.coursesList;
+	}
 }
-}
-
-
-
-// Example of file to be read
-// COMP108 Computer_Science_Industrial_Experience_Reflective_Learning_I 3
-// P
-// C
-//
-// COMP201 Introduction_to_Computing 3
-// P MATH201
-// C
-//
-// COMP208 Computer_Science_Industrial_Experience_Reflective_Learning_II 3
-// P COMP108
-// C
-//
-// COMP218 Fundamentals_of_Programming 3
-// P MATH201
-// C
-//
-// COMP248 Object-Oriented_Programming_I 3.5
-// P MATH204
-// C COMP201
-//
-// COMP228 System_Hardware 3
-// P COMP248
-// C
-//
-// COMP249 Object-Oriented_Programming_II 3.5
-// P COMP248
-// C
-//
-// COMP371 Computer_Graphics 4
-// P COMP248
-// C COMP249
-//
-// COMP376 Introduction_to_Game_Development 4
-// P COMP371
-// C COMP371
-//
-// COMP228 System_Hardware 3
-// P COMP248
-// C
