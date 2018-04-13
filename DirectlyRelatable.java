@@ -1,12 +1,10 @@
+// -----------------------------------------------------
+// Assignment 4
+// Written by: Waqar Qureshi - 40055526 and Daniel Wiktorczyk - 40060894
+// -----------------------------------------------------
 
 public interface DirectlyRelatable {
 
 	public boolean isDirectlyRelated(Course C);
 
 }
-
-/*
- * I) Create an interface named DirectlyRelatable which has a boolean method
- * called isDirectlyRelated (Course C) where C is a object of type Course
- * described in the next part.
- */
