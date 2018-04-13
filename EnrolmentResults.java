@@ -110,10 +110,29 @@ public class EnrolmentResults {
 			if (search.equalsIgnoreCase("stop"))
 				flag = false;
 			else {
-				if (Finished.contains(search) || Requested.contains(search)) {
+				int countindex = 0;
+				int iterationcount=0;;
+				boolean flag2=false;
+				countindex = Finished.size() + Requested.size();
+				for (int i=0; i<countindex; i++)
+				{
+					if (flag2 ==false)
+					iterationcount++;
+					if (i<Finished.size()){
+						if (Finished.get(i).equals(search))
+							flag2 = true;
+					}
+					else {
+						if (Requested.get(i-Finished.size()).equals(search))
+							flag2 = true;
+					}
+				}
+				if (flag2==true) {
 					System.out.println("The request file contains the course you're looking for");
+					System.out.println("It took " + iterationcount + " iterations to get this result");
 				} else
-					System.out.println("The request file doesn't contains the course you're looking for");
+					{System.out.println("The request file doesn't contains the course you're looking for");
+				System.out.println("It took " + iterationcount + " iterations to get this result");}
 				System.out.println("================================================");
 			}
 			iterations++;
