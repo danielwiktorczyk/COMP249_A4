@@ -1,6 +1,10 @@
 
+// -----------------------------------------------------
+// Assignment 4
+// Written by: Waqar Qureshi - 40055526 and Daniel Wiktorczyk - 40060894
+// -----------------------------------------------------
+
 import java.util.Scanner;
-//import InputMismatch; where is this again
 
 public class Course implements DirectlyRelatable, Cloneable {
 
@@ -60,23 +64,22 @@ public class Course implements DirectlyRelatable, Cloneable {
 	}
 
 	public String getCourseID() {
-		// TODO Auto-generated method stub
 		return courseID;
 	}
+
 	public String getCourseName() {
-		// TODO Auto-generated method stub
 		return courseName;
 	}
+
 	public String getpreReqID() {
-		// TODO Auto-generated method stub
 		return preReqID;
 	}
+
 	public String getcoReqID() {
-		// TODO Auto-generated method stub
 		return coReqID;
 	}
+
 	public double getCredits() {
-		// TODO Auto-generated method stub
 		return credit;
 	}
 
