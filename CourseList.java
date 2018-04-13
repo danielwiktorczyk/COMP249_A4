@@ -1,3 +1,4 @@
+
 // -----------------------------------------------------
 // Assignment 4
 // Written by: Waqar Qureshi - 40055526 and Daniel Wiktorczyk - 40060894
@@ -15,9 +16,9 @@ public class CourseList implements Cloneable {
 		private CourseNode next;
 
 		public Course getCourse() {
-			return new Course (course, course.getCourseID());
+			return new Course(course, course.getCourseID());
 		}
-		
+
 		/*
 		 * Default constructor
 		 */
@@ -39,8 +40,9 @@ public class CourseList implements Cloneable {
 		 */
 		public CourseNode(CourseNode otherNode) {
 			this.course = otherNode.course.clone();
-			this.next = otherNode.next; // this is OK, 
-			//because we cannot manipulate the contents of any course node (no set methods)
+			this.next = otherNode.next; // this is OK,
+			// because we cannot manipulate the contents of any course node (no
+			// set methods)
 		}
 
 		public CourseNode clone() {
@@ -48,24 +50,23 @@ public class CourseList implements Cloneable {
 		}
 
 		/*
-		 * PRIVACY LEAK !!!!
-		 * See below method for explanation
+		 * PRIVACY LEAK !!!! See below method for explanation
 		 */
-//		public CourseNode getNext() {
-//			return next;
-//		}
+		// public CourseNode getNext() {
+		// return next;
+		// }
 
 		/*
-		 * PRIVACY LEAK !!!!
-		 * THIS GETTER is HORRIBLE as it can destroy a linked list!
+		 * PRIVACY LEAK !!!! THIS GETTER is HORRIBLE as it can destroy a linked
+		 * list!
 		 */
-//		public void setNext(CourseNode next) {
-//			this.next = next;
-//		}
-//
-//		public void setCourse(Course course) {
-//			this.course = course;
-//		}
+		// public void setNext(CourseNode next) {
+		// this.next = next;
+		// }
+		//
+		// public void setCourse(Course course) {
+		// this.course = course;
+		// }
 
 	}
 
@@ -94,18 +95,16 @@ public class CourseList implements Cloneable {
 		else {
 			CourseNode temp = otherList.head; // Temporary pointer to the list
 												// to be copied
-			CourseNode newHead = new CourseNode(temp.course.clone(), null); // what
-																			// will
-																			// return
-																			// to
-																			// head
-																			// eventually
+			CourseNode newHead = new CourseNode(new Course((temp.course), temp.course.getCourseID()), null);
+			// CourseNode newHead = new CourseNode(temp.course.clone(), null);
+			// will return to head eventually
 			CourseNode end = newHead; // always points to end, so update all the
 										// time
 			temp = temp.next; // point to the second element in the original
 								// array
 			while (temp != null) {
-				end.next = new CourseNode(temp.course.clone(), null);
+				end.next = new CourseNode(new Course((temp.course), temp.course.getCourseID()), null);
+				// end.next = new CourseNode(temp.course.clone(), null);
 				// if the next element exist, make a new one have it point to it
 				end = end.next; // end points to the latest element
 				temp = temp.next; // advance the temp scan on original array
@@ -176,6 +175,10 @@ public class CourseList implements Cloneable {
 		}
 	}
 
+	/*
+	 * PRIVACY LEAK!!! See note at Course Nodes If user gains the address of a
+	 * course node, can manipulate via setters and destroy the linked list!
+	 */
 	public CourseNode find(String c) {
 		CourseNode tester = head;
 		for (int i = 0; i < size; i++) {
@@ -185,14 +188,34 @@ public class CourseList implements Cloneable {
 		}
 		return null;
 	}
-	
-	//TODO 
-	public void replaceAtIndex (Course c, int index) {
-		//TODO!
+
+	public boolean findSimilarCourse(Course c) {
+		CourseNode tester = head;
+		for (int i = 0; i < size; i++) {
+			if (tester.course.equals(c))
+				return true;
+			tester = tester.next;
+		}
+		return false;
+	}
+
+	public void replaceAtIndex(Course c, int index) {
+		if (index < 0 || index > (size - 1))
+			return;
+		if (index == 0) {
+			head = new CourseNode(c.clone(), head.next);
+		} else {
+			CourseNode indexedNode = head;
+			for (int i = 0; i < (index - 1); i++) {
+				indexedNode = indexedNode.next;
+			}
+			indexedNode.next = new CourseNode(new Course(c, c.getCourseID()), indexedNode.next.next);
+		}
 	}
 
 	public boolean contains(String c) {
 		CourseNode tester = head;
+
 		for (int i = 0; i < size; i++) {
 			if (tester.course.getCourseID().equals(c))
 				return true;
@@ -202,8 +225,15 @@ public class CourseList implements Cloneable {
 	}
 
 	public boolean equals(Syllabus s) {
-		//TODO!!!
-		return false;
+		CourseList sList = new CourseList(s.getList());
+		CourseNode thisTester = head;
+		for (int i = 0; i < size; i++) {
+			if (!sList.findSimilarCourse(thisTester.getCourse())) {
+				return false;
+			}
+			thisTester = thisTester.next;
+		}
+		return true;
 	}
 
 	public void display() {
