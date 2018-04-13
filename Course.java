@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 public class Course implements DirectlyRelatable, Cloneable {
 
+	/*
+	 * 
+	 */
 	public Course(String courseID, String courseName, double credit, String preReqID, String coReqID) {
 		super();
 		this.courseID = courseID;
@@ -21,6 +24,9 @@ public class Course implements DirectlyRelatable, Cloneable {
 			this.coReqID = "";
 	}
 
+	/*
+	 * Add 5 attributes
+	 */
 	private String courseID;
 	private String courseName;
 	private double credit;
@@ -51,7 +57,7 @@ public class Course implements DirectlyRelatable, Cloneable {
 		Scanner keys = new Scanner(System.in);
 		String value = keys.next();
 		// if value is the same course ID, then... ew
-		// this is following the requirements, but needs to compare the given 
+		// this is following the requirements, but needs to compare the given
 		// course ID to a syllabus! Much more complicated
 		return new Course(this, value);
 	}
@@ -66,24 +72,47 @@ public class Course implements DirectlyRelatable, Cloneable {
 				&& this.preReqID.equals(otherCourse.preReqID) && this.coReqID.equals(otherCourse.coReqID));
 	}
 
+	/*
+	 * Getters n' Setters
+	 */
 	public String getCourseID() {
 		return courseID;
+	}
+
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
 	}
 
 	public String getCourseName() {
 		return courseName;
 	}
 
-	public String getpreReqID() {
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public double getCredit() {
+		return credit;
+	}
+
+	public void setCredit(double credit) {
+		this.credit = credit;
+	}
+
+	public String getPreReqID() {
 		return preReqID;
 	}
 
-	public String getcoReqID() {
+	public void setPreReqID(String preReqID) {
+		this.preReqID = preReqID;
+	}
+
+	public String getCoReqID() {
 		return coReqID;
 	}
 
-	public double getCredits() {
-		return credit;
+	public void setCoReqID(String coReqID) {
+		this.coReqID = coReqID;
 	}
 
 }
