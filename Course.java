@@ -47,9 +47,12 @@ public class Course implements DirectlyRelatable, Cloneable {
 
 	@SuppressWarnings("resource")
 	public Course clone() {
-		System.out.println("Enter a new course ID");
+		System.out.println("Enter a new course ID for the copy " + "of \"" + courseName + "\" you wish to clone");
 		Scanner keys = new Scanner(System.in);
 		String value = keys.next();
+		// if value is the same course ID, then... ew
+		// this is following the requirements, but needs to compare the given 
+		// course ID to a syllabus! Much more complicated
 		return new Course(this, value);
 	}
 
