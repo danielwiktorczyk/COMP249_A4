@@ -1,4 +1,3 @@
-
 // -----------------------------------------------------
 // Assignment 4
 // Written by: Waqar Qureshi - 40055526 and Daniel Wiktorczyk - 40060894
@@ -12,9 +11,13 @@ public class CourseList implements Cloneable {
 	 * Inner class, made private
 	 */
 	public class CourseNode {
-		public Course course;
-		public CourseNode next;
+		private Course course;
+		private CourseNode next;
 
+		public Course getCourse() {
+			return new Course (course, course.getCourseID());
+		}
+		
 		/*
 		 * Default constructor
 		 */
@@ -36,19 +39,39 @@ public class CourseList implements Cloneable {
 		 */
 		public CourseNode(CourseNode otherNode) {
 			this.course = otherNode.course.clone();
-			this.next = otherNode.next; // this is bad, need to revisit
+			this.next = otherNode.next; // this is OK, 
+			//because we cannot manipulate the contents of any course node (no set methods)
 		}
 
 		public CourseNode clone() {
 			return new CourseNode(this);
 		}
 
-		public Course getCourse() {
-			return course;
-		}
+		/*
+		 * PRIVACY LEAK !!!!
+		 * See below method for explanation
+		 */
+//		public CourseNode getNext() {
+//			return next;
+//		}
+
+		/*
+		 * PRIVACY LEAK !!!!
+		 * THIS GETTER is HORRIBLE as it can destroy a linked list!
+		 */
+//		public void setNext(CourseNode next) {
+//			this.next = next;
+//		}
+//
+//		public void setCourse(Course course) {
+//			this.course = course;
+//		}
 
 	}
 
+	/*
+	 * 2 attributes
+	 */
 	private CourseNode head;
 	private int size;
 
@@ -126,7 +149,7 @@ public class CourseList implements Cloneable {
 		return true;
 	}
 
-	public boolean deleteAtIndex(int index) throws NoSuchElementException {
+	public boolean deleteFromIndex(int index) throws NoSuchElementException {
 		if (index < 0 || index > (size - 1))
 			throw new NoSuchElementException();
 		if (index == 0) {
@@ -162,6 +185,11 @@ public class CourseList implements Cloneable {
 		}
 		return null;
 	}
+	
+	//TODO 
+	public void replaceAtIndex (Course c, int index) {
+		//TODO!
+	}
 
 	public boolean contains(String c) {
 		CourseNode tester = head;
@@ -174,6 +202,7 @@ public class CourseList implements Cloneable {
 	}
 
 	public boolean equals(Syllabus s) {
+		//TODO!!!
 		return false;
 	}
 
