@@ -99,40 +99,39 @@ public class EnrolmentResults {
 		boolean flag = true;
 		int iterations = 0;
 		while (flag) {
-			
-			// TODO need to do find 
+
 			System.out.println(
 					"Please enter the ID (not the name) of the course you'd like to search the request file for"
 							+ "\n   (Enter \"stop\" to terminate this section of searching)"
-							+ "\n   ~You have searched for courses a running total of " +iterations+ " times.");
+							+ "\n   ~You have searched for courses a running total of " + iterations + " times.");
 
 			String search = userIn.nextLine();
 			if (search.equalsIgnoreCase("stop"))
 				flag = false;
 			else {
 				int countindex = 0;
-				int iterationcount=0;;
-				boolean flag2=false;
+				int iterationcount = 0;
+				;
+				boolean flag2 = false;
 				countindex = Finished.size() + Requested.size();
-				for (int i=0; i<countindex; i++)
-				{
-					if (flag2 ==false)
-					iterationcount++;
-					if (i<Finished.size()){
+				for (int i = 0; i < countindex; i++) {
+					if (flag2 == false)
+						iterationcount++;
+					if (i < Finished.size()) {
 						if (Finished.get(i).equals(search))
 							flag2 = true;
-					}
-					else {
-						if (Requested.get(i-Finished.size()).equals(search))
+					} else {
+						if (Requested.get(i - Finished.size()).equals(search))
 							flag2 = true;
 					}
 				}
-				if (flag2==true) {
+				if (flag2 == true) {
 					System.out.println("The request file contains the course you're looking for");
 					System.out.println("It took " + iterationcount + " iterations to get this result");
-				} else
-					{System.out.println("The request file doesn't contains the course you're looking for");
-				System.out.println("It took " + iterationcount + " iterations to get this result");}
+				} else {
+					System.out.println("The request file doesn't contains the course you're looking for");
+					System.out.println("It took " + iterationcount + " iterations to get this result");
+				}
 				System.out.println("================================================");
 			}
 			iterations++;
@@ -150,6 +149,7 @@ public class EnrolmentResults {
 		System.out.println("Creating two course lists and displaying contents : ");
 		CourseList ecL = new CourseList();
 		CourseList ecLPRIME = new CourseList();
+
 		ecL.display();
 		ecLPRIME.display();
 		System.out.println("================================================");
@@ -162,7 +162,10 @@ public class EnrolmentResults {
 		System.out.println("================================================");
 		System.out.println("Opening the Syllabus.txt file, and reading its contents line by line");
 		System.out.println("   Note that Syllabus has a CourseList attribute and initializes that particular list");
-		Syllabus List = new Syllabus("Syllabus.txt");
+
+		Syllabus syllabus = new Syllabus("Syllabus.txt");
+		System.out.println("Syllabus's list equals the syllabus is " + syllabus.getList().equals(syllabus));
+
 		System.out.println("================================================");
 		pause(userIn);
 
@@ -171,7 +174,7 @@ public class EnrolmentResults {
 		System.out.println("PART C : ");
 		System.out.println("================================================");
 
-		request(List, userIn);
+		request(syllabus, userIn);
 
 		// part e
 		// test constructors/methods of classes
@@ -185,9 +188,16 @@ public class EnrolmentResults {
 		Course ec4 = new Course("ARTS512", "Advanced art", 6, "ARTS446", "");
 		Course ec5 = new Course("ARTS532", "Advanced art", 6, "ARTS446", "");
 
+		System.out.println("ecL equals the syllabus is " + ecL.equals(syllabus));
 		ecL.addToStart(ec1);
+		System.out.println("ecL equals the syllabus is " + ecL.equals(syllabus));
 		ecL.addToStart(ec2);
 		ecL.addToStart(ec3);
+
+		ecL.display();
+
+		System.out.println("\n Replacing ec3 at index 2");
+		ecL.replaceAtIndex(ec3, 2);
 		ecL.display();
 
 		pause(userIn);
@@ -199,7 +209,7 @@ public class EnrolmentResults {
 
 		pause(userIn);
 
-		System.out.println("\nAdding ec4 to list at index 4....");
+		System.out.println("\nAdding ec4 to list at index 2....");
 		ecL.insertAtIndex(ec4, 2);
 		ecL.display();
 
@@ -248,8 +258,10 @@ public class EnrolmentResults {
 
 		System.out.println("================================================");
 
+		System.out.println("================================================");
+		System.out.println("~=================~END OF A4~==================~");
+		System.out.println("================================================");
+
 		userIn.close();
-
 	}
-
 }
