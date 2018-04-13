@@ -63,5 +63,21 @@ public class Course implements DirectlyRelatable, Cloneable {
 		// TODO Auto-generated method stub
 		return courseID;
 	}
+	public String getCourseName() {
+		// TODO Auto-generated method stub
+		return courseName;
+	}
+	public String getpreReqID() {
+		// TODO Auto-generated method stub
+		return preReqID;
+	}
+	public String getcoReqID() {
+		// TODO Auto-generated method stub
+		return coReqID;
+	}
+	public double getCredits() {
+		// TODO Auto-generated method stub
+		return credit;
+	}
 
 }
