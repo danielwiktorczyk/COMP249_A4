@@ -16,26 +16,23 @@ import java.io.FileReader;
 public class Syllabus {
 
 	private Course[] courses;
-//	private CourseList coursesList;
+	private CourseList coursesList;
 
 	public Syllabus(String fileName) {
 
-	//	coursesList = new CourseList();
-		
-		
-		
-		// ... 
-		
-	//	courses.List.insertAtIndex( Course c , coursesList.get(size));
-		
-		
 		String s = readFile(fileName);
 		courses = null;
 		// System.out.println(s);
 		courses = breakFile(s);
+		coursesList = new CourseList();
+		for (int i=courses.length-1; i>=0; i--) {
+			if (coursesList.contains(courses[i].getCourseID())==false)
+			coursesList.addToStart(courses[i]);
+		}
+		coursesList.display();
 	}
 
-	public String readFile(String fileName) {
+public String readFile(String fileName) {
 
 		Scanner sc = null;
 		StringBuilder sb = null;
@@ -49,12 +46,14 @@ public class Syllabus {
 				sb.append("\n");
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("OH NO THEY KILLED KENNY");
+			System.out.println("Check your files, you've left something missing");
+			System.exit(0);
 		} finally {
 			sc.close();
 		}
 		return sb.toString();
 	}
+
 
 public Course[] breakFile(String File) {
 		StringTokenizer st = new StringTokenizer(File, "\n");
@@ -73,54 +72,54 @@ public Course[] breakFile(String File) {
 		for (int j = 0; j < lines.length; j++) {
 			StringTokenizer sb = new StringTokenizer(lines[j], "\t");
 			int k = 0;
-			if (j % 3 == 0) {
-				while (sb.hasMoreTokens()) {
-					LineOne[j][k] = sb.nextToken();
-					//System.out.println(LineOne[j][k]);
-					// System.out.println("------");
-					k++;
-				}
+			
+		if (j % 3 == 0) {
+					while (sb.hasMoreTokens()) {
+						LineOne[j][k] = sb.nextToken();
+						//System.out.println(LineOne[j][k]);
+						// System.out.println("------");
+						k++;
+					}
 			}
-			if (j % 3 == 1) {
-				while (sb.hasMoreTokens()) {
-					LineTwo[j][k] = sb.nextToken();
-					//System.out.println(LineTwo[j][k]);
-					// System.out.println("------");
-					k++;
-				}
+			
+		if (j % 3 == 1) {
+					while (sb.hasMoreTokens()) {
+						LineTwo[j][k] = sb.nextToken();
+						//System.out.println(LineTwo[j][k]);
+						// System.out.println("------");
+						k++;
+					}
 			}
-			if (j % 3 == 2) {
-				while (sb.hasMoreTokens()) {
-					LineThree[j][k] = sb.nextToken();
-					//System.out.println(LineThree[j][k]);
-					// System.out.println("------");
-					k++;
-				}
+			
+		if (j % 3 == 2) {
+					while (sb.hasMoreTokens()) {
+						LineThree[j][k] = sb.nextToken();
+						//System.out.println(LineThree[j][k]);
+						// System.out.println("------");
+						k++;
+					}
 			}
-
-
-
-		}
+}
 		Course[] courses = new Course[lines.length/3];
-double[] credits = new double[(lines.length/3)];
-int count = 0;
-for(int p=0;p<lines.length;p+=3){
-credits[count]=Double.parseDouble(LineOne[p][2]);
-//System.out.println(credits[count]);
-count++;
-}
-count=0;
-for (int p=0;p<lines.length; p+=3){
-	courses[count] = new Course(LineOne[p][0],LineOne[p][1],credits[count],LineTwo[p+1][1],LineThree[p+2][1]);
-	System.out.println(courses[count]);
-	count++;
-}
-
-
+		double[] credits = new double[(lines.length/3)];
+		int count = 0;
+		for(int p=0;p<lines.length;p+=3){
+			credits[count]=Double.parseDouble(LineOne[p][2]);
+			count++;
+		}
+			count=0;
+		for (int p=0;p<lines.length; p+=3){
+			courses[count] = new Course(LineOne[p][0],LineOne[p][1],credits[count],LineTwo[p+1][1],LineThree[p+2][1]);
+			count++;
+		}
 return courses;
 	}
-
+public CourseList getList() {
+	return this.coursesList;
 }
+}
+
+
 
 // Example of file to be read
 // COMP108 Computer_Science_Industrial_Experience_Reflective_Learning_I 3
